@@ -227,6 +227,8 @@
   </div>
 </div>
 
+<audio id="buySound" src="Double Whammy.wav" preload="auto"></audio>
+
 <script>
   // --- UI Effects ---
   const pulse = document.getElementById('pulse');
@@ -234,6 +236,7 @@
   const modal = document.getElementById('modal');
   const closeBtn = document.getElementById('close');
   const buy = document.getElementById('buy');
+  const buySound = document.getElementById('buySound');
 
   function makeConfettiBurst(x, y, count = 60) {
     const colors = ['#7cf5ff', '#ffd36e', '#ff6b6b', '#a5ff7c', '#d6b3ff'];
@@ -270,8 +273,15 @@
   }
 
   buy.addEventListener('click', (e) => {
-    // Placeholder for audio (uncomment and update when audio file is added)
-    console.log('Buy button clicked! Audio would play here.');
+    // Check if audio file exists to avoid errors
+    if (buySound) {
+      buySound.currentTime = 0;
+      buySound.play().catch(() => {
+        console.log('Buy button clicked! Audio file not found yet.');
+      });
+    } else {
+      console.log('Buy button clicked! Audio would play here.');
+    }
     // UI fun
     screenPulse(e);
     document.body.classList.add('shake');
